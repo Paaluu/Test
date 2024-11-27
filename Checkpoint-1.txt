@@ -1,0 +1,76 @@
+// Checkpoint-1
+
+// Online C# Editor for free. https://www.programiz.com/
+// Write, Edit and Run your C# code using C# Online Compiler
+
+using System;
+using System.Text.RegularExpressions;
+
+int index = 0;
+string[] myProducts = new string[0];
+
+Console.WriteLine("Add a product and close with 'Exit'");
+while (true)
+{
+    Console.Write("Add a product: ");
+    string data = Console.ReadLine();
+    
+    if(data.ToLower().Trim() == "exit")
+    {
+        break;
+    }
+    bool isSplit = Regex.IsMatch(data, "-");
+    if( isSplit == false)
+    {
+       Console.WriteLine("Wrong input, has to have a - . ");  
+    }
+    else{
+     string[] partsTrimmed = data.Trim().Split('-');
+
+        string partTOne = partsTrimmed[0];
+        string partTTwo = partsTrimmed[1]; 
+
+        bool isLeft = Regex.IsMatch(partTOne, @"^[a-zA-Z]+$"); 
+        bool isRight = Regex.IsMatch(partTTwo, @"^[0-9]+$");
+        // True or false
+       if( isLeft == false)
+       {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("Wrong input, left side has to be letters. ");
+        Console.ResetColor();
+       }
+       else if(isRight == false)
+       {
+        Console.WriteLine("Wrong input, right side has to be a number. ");
+       }
+       else{
+        int partTTwoNum = Convert.ToInt32(partTTwo);
+
+           if(partTTwoNum < 200 || partTTwoNum > 500)
+            {
+            Console.WriteLine("Wrong input, number has to be 200 - 500. ");
+            }
+            else
+           {
+            Array.Resize(ref myProducts, myProducts.Length+1);
+            myProducts[index] = data.Trim();
+            //Console.WriteLine(myProducts[index]);
+            index++;
+            Console.WriteLine(index);
+            }
+       }
+    }
+}
+Console.WriteLine("myProducts with unsorted");
+for (int i = 0; i < myProducts.Length; i++)
+{
+    Console.WriteLine(myProducts[i]);
+}
+Array.Sort(myProducts);
+Console.WriteLine("myProducts sorted with foreach loop");
+foreach (string car in myProducts)
+{
+    Console.WriteLine(car);
+}
+
+Console.ReadLine();
